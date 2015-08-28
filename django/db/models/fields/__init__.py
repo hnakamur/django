@@ -52,7 +52,7 @@ __all__ = [str(x) for x in (
     'GenericIPAddressField', 'IPAddressField', 'IntegerField', 'NOT_PROVIDED',
     'NullBooleanField', 'PositiveIntegerField', 'PositiveSmallIntegerField',
     'SlugField', 'SmallIntegerField', 'TextField', 'TimeField', 'URLField',
-    'UUIDField',
+    'URLTextField', 'UUIDField',
 )]
 
 
@@ -2333,6 +2333,11 @@ class URLField(CharField):
         }
         defaults.update(kwargs)
         return super(URLField, self).formfield(**defaults)
+
+
+class URLTextField(TextField):
+    default_validators = [validators.URLValidator()]
+    description = _("URLText")
 
 
 class BinaryField(Field):
