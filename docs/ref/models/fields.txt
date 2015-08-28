@@ -1076,6 +1076,19 @@ Like all :class:`CharField` subclasses, :class:`URLField` takes the optional
 :attr:`~CharField.max_length` argument. If you don't specify
 :attr:`~CharField.max_length`, a default of 200 is used.
 
+``URLTextField``
+------------
+
+.. class:: URLTextField(**options)
+
+A :class:`TextField` for a URL longer than the limit of `CharField`.
+
+The default form widget for this field is a :class:`~django.forms.TextArea`.
+
+Like all :class:`TextField` subclasses, :class:`URLTextField` takes the optional
+:attr:`~TextField.max_length` argument. Please refer `~TextField` docuemnt for
+detail.
+
 ``UUIDField``
 -------------
 
