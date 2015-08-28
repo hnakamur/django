@@ -227,6 +227,10 @@ class Homepage(models.Model):
     url = models.URLField()
 
 
+class Webpage(models.Model):
+    url = models.URLTextField()
+
+
 @python_2_unicode_compatible
 class Product(models.Model):
     slug = models.SlugField(unique=True)

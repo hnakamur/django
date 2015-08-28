@@ -185,6 +185,7 @@ class VerboseNameField(models.Model):
     field21 = models.URLField("verbose field21")
     field22 = models.UUIDField("verbose field22")
     field23 = models.DurationField("verbose field23")
+    field24 = models.URLTextField("verbose field24")
 
 
 class GenericIPAddress(models.Model):
@@ -340,6 +341,7 @@ class AllFieldsModel(models.Model):
     time = models.TimeField()
     url = models.URLField()
     uuid = models.UUIDField()
+    url_text = models.URLTextField()
 
     fo = ForeignObject(
         'self',

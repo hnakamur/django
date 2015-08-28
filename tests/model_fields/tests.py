@@ -16,7 +16,7 @@ from django.db.models.fields import (
     DecimalField, EmailField, FilePathField, FloatField, GenericIPAddressField,
     IntegerField, IPAddressField, NullBooleanField, PositiveIntegerField,
     PositiveSmallIntegerField, SlugField, SmallIntegerField, TextField,
-    TimeField, URLField,
+    TimeField, URLField, URLTextField,
 )
 from django.db.models.fields.files import FileField, ImageField
 from django.test.utils import requires_tz_support
@@ -981,6 +981,12 @@ class PromiseTest(test.SimpleTestCase):
         lazy_func = lazy(lambda: 'http://domain.com', six.text_type)
         self.assertIsInstance(
             URLField().get_prep_value(lazy_func()),
+            six.text_type)
+
+    def test_URLTextField(self):
+        lazy_func = lazy(lambda: 'http://domain.com', six.text_type)
+        self.assertIsInstance(
+            URLTextField().get_prep_value(lazy_func()),
             six.text_type)
 
 

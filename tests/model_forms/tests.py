@@ -29,7 +29,7 @@ from .models import (
     DerivedBook, DerivedPost, Document, ExplicitPK, FilePathModel,
     FlexibleDatePost, Homepage, ImprovedArticle, ImprovedArticleWithParentLink,
     Inventory, Person, Photo, Post, Price, Product, Publication,
-    PublicationDefaults, Student, StumpJoke, TextFile, Triple, Writer,
+    PublicationDefaults, Student, StumpJoke, TextFile, Triple, Webpage, Writer,
     WriterProfile, test_images,
 )
 
@@ -2196,6 +2196,28 @@ class ModelOtherFieldTests(SimpleTestCase):
         form = HomepageForm({'url': 'example.com/test'})
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data['url'], 'http://example.com/test')
+
+    def test_url_text_on_modelform(self):
+        "Check basic URL field validation on model forms"
+        class WebpageForm(forms.ModelForm):
+            class Meta:
+                model = Webpage
+                fields = '__all__'
+
+        self.assertFalse(WebpageForm({'url': 'foo'}).is_valid())
+        self.assertFalse(WebpageForm({'url': 'http://'}).is_valid())
+        self.assertFalse(WebpageForm({'url': 'http://example'}).is_valid())
+        self.assertFalse(WebpageForm({'url': 'http://example.'}).is_valid())
+        self.assertFalse(WebpageForm({'url': 'http://com.'}).is_valid())
+
+        self.assertTrue(WebpageForm({'url': 'http://localhost'}).is_valid())
+        self.assertTrue(WebpageForm({'url': 'http://example.com'}).is_valid())
+        self.assertTrue(WebpageForm({'url': 'http://www.example.com'}).is_valid())
+        self.assertTrue(WebpageForm({'url': 'http://www.example.com:8000'}).is_valid())
+        self.assertTrue(WebpageForm({'url': 'http://www.example.com/test'}).is_valid())
+        self.assertTrue(WebpageForm({'url': 'http://www.example.com:8000/test'}).is_valid())
+        self.assertTrue(WebpageForm({'url': 'http://example.com/foo/bar'}).is_valid())
+        self.assertTrue(WebpageForm({'url': 'http://example.com/foo/bar/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long'}).is_valid())
 
 
 class OtherModelFormTests(TestCase):
